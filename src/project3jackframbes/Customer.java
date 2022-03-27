@@ -31,7 +31,7 @@ public class Customer {
         studentID = sID;
         email = e;
         validID = checkID(sID);
-        validEmail = true;
+        validEmail = checkEmail(e);
     }
 
     /**
@@ -143,5 +143,52 @@ public class Customer {
         {
             return false;
         }
+    }
+    /**
+     * Checks to make sure the email is valid
+     * @param email the string of the email
+     * @return true if email is valid otherwise false
+     */
+    private static boolean checkEmail(String email)
+    {
+        int tomanyA =0; //counts how many @'s there are
+        boolean period = false; //if there is a . will be true
+        int numAfter =0; //number of characters after the .
+        int length = email.length(); //length of email
+        for (int i=0;i<length;i++)
+        {
+            char c = email.charAt(i);
+            String check = Character.toString(c);
+            if (tomanyA > 1) //if there is more then 1 @ return false
+            {
+                return false;
+            }
+            else if (check.equals(" ")) //if there is a space return false
+            {
+                return false;
+            }
+            else if (check.equals("@")) //when there is an @ add one to tomanyA
+            {
+                tomanyA++;
+            }
+            else if (check.equals(".")) //when there is a . change period to true if not and resets numAfter to 0
+            {
+                period = true;
+                numAfter=0;
+            }
+            else if (period) //if period is true then add to numAfter
+            {
+                numAfter++;
+            }
+        }
+        if (!period) //if there was not a . return false
+        {
+            return false;
+        }
+        else if (numAfter<2) //if there is not atleast 2 characters after the . return false
+        {
+            return false;
+        }
+        return true; 
     }
 }
