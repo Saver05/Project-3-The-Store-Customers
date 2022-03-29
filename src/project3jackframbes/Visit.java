@@ -100,4 +100,5 @@ public class Visit {
     public String toString() {
         return date + " " + time + " " + visitor;
     }
+    
 }

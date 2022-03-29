@@ -4,6 +4,7 @@
  */
 package project3jackframbes;
 
+import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -29,6 +30,29 @@ public class Simulation {
         numCustomers = nC;
         numVisits = nV;
         year = y;
+    }
+    /**
+     * starts the simulation running it the specified amount of times
+     */
+    public void doSimulation()
+    {
+        Random rand = new Random();
+        Customer[] customers;
+        customers = new Customer[numCustomers];
+        for (int i=0;i<numCustomers;i++)
+        {
+            String name = generateName();
+            String id = generateStudentID();
+            Customer cu = new Customer(name,id,"noone@xavier.edu");
+            customers[i] = cu;
+        }
+        for (int i=0;i<numVisits;i++)
+        {
+            int number = rand.nextInt(numCustomers);
+            Visit v = new Visit(customers[number],"01/01/yy",generateTime());
+            log.addVisit(v);
+        }
+        log.reportAllVisits();
     }
     /**
      * generates a random name for a fake student
@@ -82,33 +106,73 @@ public class Simulation {
         }
         return id;
     }
+    /**
+     * generates a random time hh:mm
+     * @return time hh:mm
+     */
     private String generateTime()
     {
         Random rand = new Random();
         String time;
         int h = rand.nextInt(24);
         int m = rand.nextInt(60);
-        time = h+":"+m;
+        String minute = ""+m;
+        String hour=""+h;
+        if (h<10)
+        {
+           hour = "0"+h;
+        }
+        if (m<10)
+        {
+            minute = "0"+m;
+        }
+        time = hour+"   :"+m;
         return time;
     }    
-    public void doSimulation()
+    private String generateEmail(String name)
     {
         Random rand = new Random();
-        Customer[] customers;
-        customers = new Customer[numCustomers];
-        for (int i=0;i<numCustomers;i++)
+        String email = name;
+        int number = rand.nextInt(100);
+        email = email+number+"@xavier.edu";
+        return email;
+    }
+    private String generateDate()
+    {
+        Random rand = new Random();
+        String date = "";
+        int mm;
+        int dd;
+        int yy;
+        mm = rand.nextInt(12);
+        int[] days = {31,28,31,30,31,30,31,31,30,31,30,31};
+        dd = rand.nextInt(days[mm]);
+        yy = 22;
+        if (mm==0)
         {
-            String name = generateName();
-            String id = generateStudentID();
-            Customer cu = new Customer(name,id,"noone@xavier.edu");
-            customers[i] = cu;
+            mm++;
         }
-        for (int i=0;i<numVisits;i++)
+        if (dd==0)
         {
-            int number = rand.nextInt(numCustomers);
-            Visit v = new Visit(customers[number],"01/01/yy",generateTime());
-            log.addVisit(v);
+            dd++;
         }
-        log.reportAllVisits();
+        return mm+"/"+dd+"/"+yy;  
+    }
+    private void analyzeLog(int [] counts)
+    {
+        int length = counts.length;
+        for (int i=0;i<length;i++)
+        {
+           counts[i]=0; 
+        }
+        log.setStart();
+        if (length==24)
+        {
+           for (int i=0;i<length;i++)
+           {
+              
+           }
+        }
+        
     }
 }
