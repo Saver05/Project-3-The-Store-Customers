@@ -91,7 +91,7 @@ public class VisitorLog {
             if (count == 0) {
                 System.out.println("These are all of the visits");
             }
-            System.out.println(v.getVisitor());
+            System.out.println(v.toString());
             count++;
         }
         if (count == 0) {
@@ -107,13 +107,18 @@ public class VisitorLog {
      */
     public void reportVisitsInMonth(int month, int year) {
         int count = 0;
+        String m = ""+month;
         for (Visit v : visits) {
             if (month == v.getMonth()) {
                 if (year == v.getYear()) {
                     if (count == 0) {
-                        System.out.println("These are all the visits in: " + month + ":" + year);
+                        if (month<10)
+                        {
+                            m = "0"+month;
+                        }
+                        System.out.println("These are all the visits in: " + m + ":" + year);
                     }
-                    System.out.println(v.getVisitor());
+                    System.out.println(v.toString());
                     count++;
                 }
             }
@@ -137,7 +142,7 @@ public class VisitorLog {
                 if (count == 0) {
                     System.out.println("These are all of the visits by " + name);
                 }
-                System.out.println(v.getVisitor());
+                System.out.println(v.toString());
                 count++;
             }
         }
